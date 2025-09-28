@@ -9,6 +9,7 @@ import { useDiaryStore } from '@/store/diary';
 import { diaryService } from '@/lib/services/diary';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Save } from 'lucide-react';
 
@@ -81,11 +82,11 @@ export default function NewDiaryPage() {
               </div>
               
               <div>
-                <textarea
+                <Textarea
                   {...register('content')}
                   placeholder="写下你的想法..."
                   rows={15}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 resize-none"
+                  className="resize-none"
                   disabled={isLoading}
                 />
                 {errors.content && (

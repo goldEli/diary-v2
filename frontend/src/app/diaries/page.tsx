@@ -7,8 +7,10 @@ import { useDiaryStore } from '@/store/diary';
 import { diaryService } from '@/lib/services/diary';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Plus, LogOut, Search } from 'lucide-react';
+import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { Plus, LogOut, Search, Trash2, Edit } from 'lucide-react';
 import AuthGuard from '@/components/AuthGuard';
+import { Input } from '@/components/ui/input';
 
 export default function DiariesPage() {
   const [searchKeyword, setSearchKeyword] = useState('');
@@ -17,7 +19,7 @@ export default function DiariesPage() {
   
   const router = useRouter();
   const { user, logout } = useAuth();
-  const { diaries, setDiaries, setLoading, loading } = useDiaryStore();
+  const { diaries, setDiaries, setLoading, loading, deleteDiary } = useDiaryStore();
 
   useEffect(() => {
     loadDiaries();
@@ -59,6 +61,15 @@ export default function DiariesPage() {
     router.push('/login');
   };
 
+  const handleDeleteDiary = async (id: number) => {
+    try {
+      await diaryService.deleteDiary(id);
+      deleteDiary(id);
+    } catch (error) {
+      console.error('删除日记失败:', error);
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('zh-CN', {
       year: 'numeric',
@@ -84,16 +95,15 @@ export default function DiariesPage() {
       </header>
 
       <main className="max-w-4xl mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <div className="flex gap-4 flex-1">
-            <input
+        <div className="flex justify-between items-center mb-6 gap-4">
+          <div className="flex gap-4 flex-1 items-center">
+            <Input
               type="text"
               placeholder="搜索日记..."
               value={searchKeyword}
               onChange={(e) => setSearchKeyword(e.target.value)}
-              className="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-            <Button onClick={handleSearch}>
+            <Button  onClick={handleSearch}>
               <Search className="w-4 h-4 mr-2" />
               搜索
             </Button>
@@ -115,10 +125,47 @@ export default function DiariesPage() {
         ) : (
           <div className="space-y-4">
             {diaries.map((diary) => (
-              <Card key={diary.id} className="cursor-pointer hover:shadow-md transition-shadow">
+              <Card key={diary.id} className="hover:shadow-md transition-shadow">
                 <CardHeader>
-                  <CardTitle className="text-lg">{diary.title}</CardTitle>
-                  <CardDescription>{formatDate(diary.created_at)}</CardDescription>
+                  <div className="flex justify-between items-start">
+                    <div className="flex-1">
+                      <CardTitle className="text-lg">{diary.title}</CardTitle>
+                      <CardDescription>{formatDate(diary.created_at)}</CardDescription>
+                    </div>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => router.push(`/diaries/${diary.id}/edit`)}
+                      >
+                        <Edit className="w-4 h-4" />
+                      </Button>
+                      <AlertDialog>
+                        <AlertDialogTrigger asChild>
+                          <Button variant="outline" size="sm" className="text-red-600 hover:text-red-700">
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        </AlertDialogTrigger>
+                        <AlertDialogContent>
+                          <AlertDialogHeader>
+                            <AlertDialogTitle>确认删除</AlertDialogTitle>
+                            <AlertDialogDescription>
+                              确定要删除这篇日记吗？此操作无法撤销。
+                            </AlertDialogDescription>
+                          </AlertDialogHeader>
+                          <AlertDialogFooter>
+                            <AlertDialogCancel>取消</AlertDialogCancel>
+                            <AlertDialogAction
+                              onClick={() => handleDeleteDiary(diary.id)}
+                              className="bg-red-600 hover:bg-red-700"
+                            >
+                              删除
+                            </AlertDialogAction>
+                          </AlertDialogFooter>
+                        </AlertDialogContent>
+                      </AlertDialog>
+                    </div>
+                  </div>
                 </CardHeader>
                 <CardContent>
                   <p className="text-gray-600 line-clamp-3">{diary.content}</p>
