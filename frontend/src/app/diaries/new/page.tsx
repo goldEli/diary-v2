@@ -11,9 +11,11 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Save } from 'lucide-react';
+import { Input } from '@/components/ui/input';
 
 const diarySchema = z.object({
   content: z.string().min(1, '请输入内容'),
+  created_at: z.string().min(1, '请选择日期'),
 });
 
 type DiaryForm = z.infer<typeof diarySchema>;
@@ -72,13 +74,22 @@ export default function NewDiaryPage() {
                 <Textarea
                   {...register('content')}
                   placeholder="写下你的想法..."
-                  rows={15}
+                  rows={30}
                   className="resize-none"
                   disabled={isLoading}
                 />
                 {errors.content && (
                   <p className="text-sm text-red-500 mt-1">{errors.content.message}</p>
                 )}
+              </div>
+              {/* created_at */}
+              <div>
+                <Input
+                  {...register('created_at')}
+                  type="date"
+                  defaultValue={new Date().toISOString().split('T')[0]}
+                  placeholder="选择日期"
+                />
               </div>
 
               {error && (
