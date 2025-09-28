@@ -34,10 +34,21 @@ export default function NewDiaryPage() {
     resolver: zodResolver(diarySchema),
   });
 
+  const formatDate = (str: string) => {
+    const date = new Date();
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+    const seconds = date.getSeconds();
+    return `${str} ${hours}:${minutes}:${seconds}`;
+  };
+
   const onSubmit = async (data: DiaryForm) => {
     try {
       setIsLoading(true);
       setError('');
+
+      const created_at = formatDate(data.created_at);
+      data.created_at = created_at;
       
       const diary = await diaryService.createDiary(data);
       addDiary(diary);
