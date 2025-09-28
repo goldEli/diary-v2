@@ -1,0 +1,14 @@
+# 数据库配置
+DB_HOST=localhost
+DB_PORT=3306
+DB_USERNAME=diary_user
+DB_PASSWORD=diary_password
+DB_DATABASE=diary_db
+
+# JWT配置
+JWT_SECRET=xxxxxxxxxxxx
+
+# 应用配置
+PORT=3001
+NODE_ENV=development
+FRONTEND_URL=http://localhost:3000
