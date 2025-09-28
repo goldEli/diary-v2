@@ -94,9 +94,9 @@ export default function NewDiaryPage() {
                 >
                   取消
                 </Button>
-                <Button type="submit" disabled={isLoading}>
+                <Button disabled={isLoading} type="submit" >
                   <Save className="w-4 h-4 mr-2" />
-                  {isLoading ? '保存中...' : '保存'}
+                  {'保存'}
                 </Button>
               </div>
             </form>

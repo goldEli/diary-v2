@@ -22,7 +22,8 @@ Authorization: Bearer YOUR_TOKEN_HERE
 Content-Type: application/json
 
 {
-  "content": "今天天气很好，心情也不错！"
+  "content": "今天天气很好，心情也不错！",
+  "date": "2024-01-15"
 }
 
 ### 获取日记列表
@@ -43,7 +44,8 @@ Authorization: Bearer YOUR_TOKEN_HERE
 Content-Type: application/json
 
 {
-  "content": "更新后的日记内容"
+  "content": "更新后的日记内容",
+  "date": "2024-01-16"
 }
 
 ### 删除日记
