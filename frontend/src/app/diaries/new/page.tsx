@@ -8,13 +8,11 @@ import { z } from 'zod';
 import { useDiaryStore } from '@/store/diary';
 import { diaryService } from '@/lib/services/diary';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { ArrowLeft, Save } from 'lucide-react';
 
 const diarySchema = z.object({
-  title: z.string().min(1, '请输入标题'),
   content: z.string().min(1, '请输入内容'),
 });
 
@@ -70,17 +68,6 @@ export default function NewDiaryPage() {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-              <div>
-                <Input
-                  {...register('title')}
-                  placeholder="日记标题"
-                  disabled={isLoading}
-                />
-                {errors.title && (
-                  <p className="text-sm text-red-500 mt-1">{errors.title.message}</p>
-                )}
-              </div>
-              
               <div>
                 <Textarea
                   {...register('content')}

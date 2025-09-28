@@ -22,7 +22,6 @@ Authorization: Bearer YOUR_TOKEN_HERE
 Content-Type: application/json
 
 {
-  "title": "我的第一篇日记",
   "content": "今天天气很好，心情也不错！"
 }
 
@@ -44,7 +43,6 @@ Authorization: Bearer YOUR_TOKEN_HERE
 Content-Type: application/json
 
 {
-  "title": "更新后的日记标题",
   "content": "更新后的日记内容"
 }
 

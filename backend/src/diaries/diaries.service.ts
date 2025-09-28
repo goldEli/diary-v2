@@ -43,7 +43,7 @@ export class DiariesService {
   async search(userId: number, keyword: string, page: number = 1, limit: number = 10): Promise<{ data: Diary[]; total: number }> {
     const queryBuilder = this.diariesRepository.createQueryBuilder('diary')
       .where('diary.user_id = :userId', { userId })
-      .andWhere('(diary.title LIKE :keyword OR diary.content LIKE :keyword)', { keyword: `%${keyword}%` })
+      .andWhere('diary.content LIKE :keyword', { keyword: `%${keyword}%` })
       .orderBy('diary.created_at', 'DESC');
 
     const [data, total] = await queryBuilder

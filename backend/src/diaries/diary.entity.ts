@@ -9,8 +9,6 @@ export class Diary {
   @Column()
   user_id: number;
 
-  @Column()
-  title: string;
 
   @Column('text')
   content: string;

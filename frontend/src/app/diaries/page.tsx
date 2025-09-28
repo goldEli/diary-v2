@@ -129,7 +129,6 @@ export default function DiariesPage() {
                 <CardHeader>
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <CardTitle className="text-lg">{diary.title}</CardTitle>
                       <CardDescription>{formatDate(diary.created_at)}</CardDescription>
                     </div>
                     <div className="flex gap-2">
