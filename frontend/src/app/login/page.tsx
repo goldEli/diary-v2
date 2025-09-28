@@ -93,17 +93,17 @@ export default function LoginPage() {
             )}
 
             <Button type="submit" className="w-full" disabled={isLoading}>
-              {isLoading ? '登录中...' : '登录'}
+              {'登录'}
             </Button>
 
-            <div className="text-center">
+            {/* <div className="text-center">
               <p className="text-sm text-gray-600">
                 还没有账户？{' '}
                 <Link href="/register" className="text-blue-600 hover:underline">
                   立即注册
                 </Link>
               </p>
-            </div>
+            </div> */}
           </form>
         </CardContent>
       </Card>
